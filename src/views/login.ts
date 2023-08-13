@@ -2,7 +2,7 @@ import { WebFS } from "../webfs/client/webfs";
 import { Button, Form, FormInput, FormLabel, FormSubmit } from "../webui/form";
 import { KWARGS, Module } from "../webui/module";
 import { PageManager } from "../webui/pagemanager";
-import { STRINGS } from "../languages/default";
+import { STRINGS } from "../language/default";
 import "./login.css"
 
 export class Login extends Module<HTMLDivElement> {

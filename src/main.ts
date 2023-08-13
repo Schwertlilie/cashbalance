@@ -1,6 +1,6 @@
 import './main.css'
 import { PageManager } from './webui/pagemanager'
-import { STRINGS, setupLanguage } from './languages/default'
+import { STRINGS, setupLanguage } from './language/default'
 import { Login, tryReconnectToLastSession } from './views/login'
 
 import { Overview } from './views/overview'
