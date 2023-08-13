@@ -1,6 +1,6 @@
 # Cashbalance
 
-> Hosted on: https://Schwertlilie.github.io/cashbalance/
+> Hosted on: https://schwertlilie.github.io/cashbalance/
 
 Track your money flow. The app is a static webpage that can be installed as an app and connects to a WebFS backend. Your data is stored on your WebFS backend server, so you have full controll over your data.
 
