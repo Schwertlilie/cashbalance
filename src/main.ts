@@ -1,24 +1,21 @@
 import './main.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { PageManager } from './webui/pagemanager'
+import { STRINGS, setupLanguage } from './languages/default'
+import { Login, tryReconnectToLastSession } from './views/login'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+import { Overview } from './views/overview'
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+async function main() {
+  setupLanguage()
+  document.getElementsByTagName("title")[0].innerHTML = STRINGS.APPNAME
+  await tryReconnectToLastSession()
+  new PageManager(
+    "overview",
+    {
+      login: new Login(),
+      overview: new Overview(),
+    }
+  )
+}
+
+main()
