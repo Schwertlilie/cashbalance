@@ -14,6 +14,11 @@ node --version
 npm --version
 ```
 
+Clone project
+```bash
+git clone --recurse-submodules git@github.com:Schwertlilie/cashbalance.git
+```
+
 Setup vite project
 ```bash
 npm install
