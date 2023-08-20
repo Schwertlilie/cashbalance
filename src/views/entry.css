@@ -1,0 +1,31 @@
+.entry {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    margin-left: 0.1;
+    margin-right: 0.1;
+    padding: 0.25em;
+}
+
+.entryCaption {
+    display: block;
+    font-weight: bold;
+}
+
+.entry input {
+    border-radius: var(--radius-large);
+    border: 0.1em solid var(--accent-1-bg);
+}
+
+.entryTag div {
+    display: inline-block;
+    margin: 0.25em;
+}
+
+.entryIcon {
+    height: 1em;
+    fill: var(--fg-color-highlight);
+}
+
+.entryRadioGroup div {
+    display: inline-block;
+}
