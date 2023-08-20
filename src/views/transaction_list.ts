@@ -1,6 +1,8 @@
 import './transaction_list.css'
 import { Module } from "../webui/module";
 import { iconCash, iconTax } from '../icons';
+import { Button } from '../webui/form';
+import { PageManager } from '../webui/pagemanager';
 
 export class TransactionList extends Module<HTMLDivElement> {
     public constructor() {
@@ -15,6 +17,10 @@ export class TransactionList extends Module<HTMLDivElement> {
         this.add(transaction4)
         let transaction5 = new Transaction("shop", "category", 12.34, false, true, false, "01.01.1900", "cost_center")
         this.add(transaction5)
+
+        let button = new Button("+", "buttonWide")
+        button.onClick = () => {PageManager.open("entry", {})}
+        this.add(button)
     }
 }
 
