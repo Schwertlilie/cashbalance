@@ -4,10 +4,11 @@
   --bg-color-transparent: #333333BB;
   --bg-color-hover: #444444;
   --bg-color-2: #555555;
-  --font-color: #ffffff;
-  --font-color-hover: #d3d3d3;
-  --font-color-highlight: #f8c24c;
-  --font-color-highlight-hover: #ffd477;
+  --fg-color: #ffffff;
+  --fg-color-hover: #d3d3d3;
+  --fg-color-highlight: #f8c24c;
+  --fg-color-highlight-hover: #ffd477;
+  --fg-color-gray: #999999;
   --accent-1-bg: #162850;
   --accent-1-fg: #f5f5f5;
   --accent-1-bg-selected: #4a5e85;
@@ -27,6 +28,7 @@
   --radius: 0.3em;
   --radius-large: 0.5em;
   --radius-round: 9999em;
+  --negative-amount: #ff3333;
   color: var(--font-color);
   background-color: var(--bg-color);
 }
