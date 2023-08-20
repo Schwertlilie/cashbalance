@@ -18,6 +18,7 @@ Clone project
 ```bash
 git clone --recurse-submodules git@github.com:Schwertlilie/cashbalance.git
 ```
+> Use git ui of visual studio code to pull changes to make sure you are not in detached head and can commit changes.
 
 Setup vite project
 ```bash
