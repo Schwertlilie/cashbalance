@@ -160,6 +160,27 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             transaction = new Transaction()
             this.uuid = makeid(32)
         }
+
+        // Set values into form
+        this.dateInput.value(transaction.date)
+        this.categoryInput.value(transaction.category)
+        this.shopInput.value(transaction.shop)
+        this.amountInput.value(transaction.amount.toFixed(2))
+        this.cashCheckbox.value(transaction.isCash)
+        this.taxCheckbox.value(transaction.isTax)
+        this.draftCheckbox.value(transaction.isDraft)
+        let costCenterIndex = STRINGS.EDIT_LIST_COST_CENTER.indexOf(transaction.costCenter)
+        if (costCenterIndex == -1) {
+            this.costCenterRadioButtonGroup.value(STRINGS.EDIT_LIST_COST_CENTER.length - 1)
+            this.costCenterOtherLabel.show()
+            this.costCenterOtherInput.show()
+            this.costCenterOtherInput.value(transaction.costCenter)
+        } else {
+            this.costCenterOtherLabel.hide()
+            this.costCenterOtherInput.hide()
+            this.costCenterRadioButtonGroup.value(costCenterIndex)
+        }
+        this.noteInput.value(transaction.note)
     }
 
     private async saveTransaction() {
@@ -168,7 +189,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         if (transaction == null) {
             return
         }
-
+        
         // Replace old transaction or append new
         let index = getTransactionListIndex(this.transactions, this.uuid)
         if (index != -1) {
