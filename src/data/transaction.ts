@@ -116,3 +116,21 @@ export interface TransactionsWithMd5 {
     transactions: Transaction[]
     md5: string
 }
+
+export function getTransactionListIndex(transactions: Transaction[], uuid: string): number {
+    /**
+     * Returns the index of the transaction with specified uuid, or -1 if it is not present.
+     * @param transactions The list of transactions.
+     * @param uuid The uuid to locate in the transactions list.
+     */
+
+    if (uuid == "") {
+        return -1
+    }
+    for (let i = 0; i < transactions.length; i++) {
+        if (transactions[i].uuid == uuid) {
+            return i
+        }
+    }
+    return -1
+}
