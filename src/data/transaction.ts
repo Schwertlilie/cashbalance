@@ -57,6 +57,21 @@ export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
         alert(STRINGS.ERROR_INVALID_SESSION)
         return null
     }
+
+    let fileTree = await WebFS.instance.list(".")
+    if (fileTree == null) {
+        alert(STRINGS.ERROR_READ_FILE)
+        return null
+    }
+    if (fileTree[FILEPATH]) {
+    } else {
+        let isPut = await WebFS.instance.putTxt(FILEPATH, HEADER + "\n", "")
+        if (!isPut) {
+            alert(STRINGS.ERROR_CREATE_FILE)
+            return null
+        }
+    }
+
     let csvFileContent = await WebFS.instance.readTxt(FILEPATH)
     if (csvFileContent == null) {
         alert(STRINGS.ERROR_READ_FILE)
