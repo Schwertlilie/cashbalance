@@ -26,6 +26,7 @@ export class English {
     public static LOGIN_ERROR_MISSING_INPUTS = "You must provide all fields (session name, api endpoint and api token)."
     public static LOGIN_ERROR_LOGIN_FAILED = "The provided login information is wrong. Is the URL and API token correct?"
 
+    public static EDIT_CAPTION_DATE = "Date"
     public static EDIT_CAPTION_CATEGORY = "Category"
     public static EDIT_CAPTION_SHOP = "Shop"
     public static EDIT_CAPTION_AMOUNT = "Amount"
@@ -38,10 +39,12 @@ export class English {
     public static EDIT_CHECKBOX_TAX = "Tax"
     public static EDIT_CHECKBOX_DRAFT = "Draft"
     public static EDIT_BUTTON_SAVE = "Save"
+    public static EDIT_PLACEHOLDER_DATE = "2023-09-01"
     public static EDIT_PLACEHOLDER_CATEGORY = "Alimentary"
     public static EDIT_PLACEHOLDER_SHOP = "Rewe"
     public static EDIT_PLACEHOLDER_AMOUNT = "0.00"
     public static EDIT_PLACEHOLDER_RECEIPT = "/path/to/receipt.png"
     public static EDIT_PLACEHOLDER_NOTE = ""
+    public static EDIT_PLACEHOLDER_COST_CENTER = "XF"
     public static EDIT_LIST_COST_CENTER = ["XF", "MF", "IF", "Other"]
 }

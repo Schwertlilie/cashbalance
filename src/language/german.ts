@@ -5,6 +5,7 @@ export class German extends English {
 
     //public static APPNAME = "Kassenbuch"
 
+    public static EDIT_CAPTION_DATE = "Datum"
     public static EDIT_CAPTION_CATEGORY = "Kategorie"
     public static EDIT_CAPTION_SHOP = "Handelspartner"
     public static EDIT_CAPTION_AMOUNT = "Betrag"
@@ -19,7 +20,6 @@ export class German extends English {
     public static EDIT_BUTTON_SAVE = "Speichern"
     public static EDIT_PLACEHOLDER_CATEGORY = "Lebensmittel & Haushalt"
     public static EDIT_PLACEHOLDER_SHOP = "Rewe"
-    public static EDIT_PLACEHOLDER_AMOUNT = "0.00"
     public static EDIT_PLACEHOLDER_RECEIPT = "/path/to/receipt.png"
     public static EDIT_LIST_COST_CENTER = ["XF", "MF", "IF", "Andere"]
 }
