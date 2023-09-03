@@ -7,6 +7,7 @@ import { PageManager } from '../webui/pagemanager';
 import './edit.css'
 
 export class TransactionEdit extends Module<HTMLDivElement> {
+    private dateInput: FormInput
     private categoryInput: FormInput
     private shopInput: FormInput
     private amountInput: FormInput
@@ -18,6 +19,12 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private noteInput: FormInput
     public constructor() {
         super("div", "", "editTransaction")
+
+        // Date
+        let dateCaption = new FormLabel(STRINGS.EDIT_CAPTION_DATE, "editCaption")
+        this.dateInput = new FormInput("inputDate", STRINGS.EDIT_PLACEHOLDER_DATE, "date")
+        this.add(dateCaption)
+        this.add(this.dateInput)
         
         // Category
         let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
