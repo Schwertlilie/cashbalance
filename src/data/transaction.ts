@@ -18,6 +18,38 @@ export class Transaction {
         public uuid: string = "",
     ) {}
 }
+
+export async function storeTransactions(transactions: Transaction[], md5: string): Promise<boolean> {
+    let csvFileContent = ""
+    csvFileContent = HEADER + "\n"
+    for (let i = 0; i < transactions.length; i++) {
+        let csvTransaction = [
+            transactions[i].date,
+            transactions[i].category,
+            transactions[i].shop,
+            (transactions[i].amount * 100).toFixed(0),
+            transactions[i].isCash?"1":"0",
+            transactions[i].isTax?"1":"0",
+            transactions[i].isDraft?"1":"0",
+            transactions[i].costCenter,
+            transactions[i].note,
+            transactions[i].uuid,
+        ].join(";")
+        csvFileContent = csvFileContent + csvTransaction + "\n"
+    }
+    if (WebFS.instance == null) {
+        alert(STRINGS.ERROR_INVALID_SESSION)
+        return false
+    } else {
+        let isSaved = await WebFS.instance!.putTxt(FILEPATH, csvFileContent, md5)
+        if (!isSaved) {
+            alert(STRINGS.ERROR_SAVE_FILE)
+            return false
+        }
+    }
+    return true
+}
+
 export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
     let transactions: Transaction[] = []
     let md5: string = ""
