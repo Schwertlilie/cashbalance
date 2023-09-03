@@ -1,12 +1,17 @@
+import { Transaction, loadTransactions, storeTransactions } from '../data/transaction';
 import { iconCash, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
+import { WebFS } from '../webfs/client/webfs';
 import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup } from '../webui/form';
-import { Module } from '../webui/module';
+import { KWARGS, Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
 import './edit.css'
 
 export class TransactionEdit extends Module<HTMLDivElement> {
+    private md5: string = ""
+    private transactions: Transaction[] = []
+    private uuid: string = ""
     private dateInput: FormInput
     private categoryInput: FormInput
     private shopInput: FormInput
@@ -18,6 +23,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private costCenterOtherLabel: FormLabel
     private costCenterOtherInput: FormInput
     private noteInput: FormInput
+    private saveButton: Button
     public constructor() {
         super("div", "", "editTransaction")
 
@@ -26,7 +32,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.dateInput = new FormInput("inputDate", STRINGS.EDIT_PLACEHOLDER_DATE, "date")
         this.add(dateCaption)
         this.add(this.dateInput)
-        
+
         // Category
         let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
         this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_PLACEHOLDER_CATEGORY, "text")
@@ -129,16 +135,34 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.add(this.noteInput)
 
         // Save button
-        let saveButton = new Button(STRINGS.EDIT_BUTTON_SAVE, "buttonWide")
-        saveButton.onClick = () => {
-            this.saveTransaction()
-            PageManager.open("transactionList", {})
-        }
-        this.add(saveButton)
+        this.saveButton = new Button(STRINGS.EDIT_BUTTON_SAVE, "buttonWide")
+        this.saveButton.onClick = this.saveTransaction.bind(this)
+        this.add(this.saveButton)
     }
 
-    private saveTransaction(): string {
-        let csvString: string
+    public async update(kwargs: KWARGS, _changedPage: boolean) {
+        if (WebFS.instance == null) {
+            PageManager.open("login", {})
+        }
+        let loadReturn = await loadTransactions()
+        if (loadReturn == null) {
+            return
+        }
+        this.transactions = loadReturn.transactions
+        this.md5 = loadReturn.md5
+        
+        let transaction: Transaction
+        if (kwargs.uuid == "") {
+            transaction = new Transaction()
+            this.uuid = makeid(32)
+        }
+    }
+
+    private async saveTransaction() {
+        this.saveButton.htmlElement.disabled = true
+
+        let transaction: Transaction = new Transaction()
+        
         let costCenter: string
 
         if (this.costCenterRadioButtonGroup.value() == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
@@ -147,21 +171,24 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             costCenter = STRINGS.EDIT_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
         }
 
-        let uuid = makeid(32)
+        transaction.date = this.dateInput.value()
+        transaction.category = this.categoryInput.value()
+        transaction.shop = this.shopInput.value()
+        transaction.amount = Number(this.amountInput.value())
+        transaction.isCash = this.cashCheckbox.value()?true:false
+        transaction.isTax = this.taxCheckbox.value()?true:false
+        transaction.isDraft = this.draftCheckbox.value()?true:false
+        transaction.costCenter = costCenter
+        transaction.note = this.noteInput.value()
+        transaction.uuid = this.uuid
 
-        // TODO convert TransactionEdit values to Transaction, use general save method (data/transaction.ts)
-        csvString = [
-            this.categoryInput.value(),
-            this.shopInput.value(),
-            (Number(this.amountInput.value()) * 100).toFixed(0), // TODO handle internally as number
-            this.cashCheckbox.value()?"1":"0",
-            this.taxCheckbox.value()?"1":"0",
-            this.draftCheckbox.value()?"1":"0",
-            costCenter,
-            this.noteInput.value(),
-            uuid,
-        ].join(";")
-        console.log(csvString)
-        return csvString
+        // TODO replace old transaction or append new
+        this.transactions.push(transaction) 
+
+        let isSaved = await storeTransactions(this.transactions, this.md5)
+        this.saveButton.htmlElement.disabled = false
+        if (isSaved) {
+            PageManager.open("transactionList", {})
+        }
     }
 }
