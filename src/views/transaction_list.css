@@ -8,6 +8,40 @@
     border-radius: var(--radius-large);
 }
 
+.transactionsContainer {
+    display: block;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.transactionAddButton {
+    background-color: var(--accent-1-bg);
+    color: var(--accent-1-fg);
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: var(--radius-round);
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.5em;
+}
+
+.transactionAddButton:hover {
+    background-color: var(--accent-1-bg-hover);
+}
+
 .transactionRow div {
     display: inline-block;
 }

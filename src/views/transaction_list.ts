@@ -11,10 +11,10 @@ export class TransactionList extends Module<HTMLDivElement> {
     private transactionsContainer: Module<HTMLDivElement>
     public constructor() {
         super("div")
-        this.transactionsContainer = new Module<HTMLDivElement>("div")
+        this.transactionsContainer = new Module<HTMLDivElement>("div", "", "transactionsContainer")
         this.add(this.transactionsContainer)
 
-        let button = new Button("+", "buttonWide")
+        let button = new Button("+", "transactionAddButton")
         button.onClick = () => {PageManager.open("edit", {uuid: ""})}
         this.add(button)
     }
