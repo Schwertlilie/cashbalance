@@ -1,7 +1,7 @@
 import { English } from "./english";
 import { German } from "./german";
 
-export let STRINGS = German
+export let STRINGS = English
 
 export function setLanguage(languageCode: string) {
     localStorage.language = languageCode
@@ -10,11 +10,11 @@ export function setLanguage(languageCode: string) {
 
 export function setupLanguage() {
     switch(localStorage.language) {
-        case "de":
-            STRINGS = German; break;
         case "en":
         case "us":
+            STRINGS = English; break
+        case "de":
         default:
-            STRINGS = English; break;
+            STRINGS = German; break;
     }
 }
