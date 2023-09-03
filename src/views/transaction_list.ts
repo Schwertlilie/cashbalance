@@ -7,15 +7,15 @@ import { PageManager } from '../webui/pagemanager';
 export class TransactionList extends Module<HTMLDivElement> {
     public constructor() {
         super("div")
-        let transaction1 = new Transaction("shop", "category", -12.34, true, true, true, "01.01.1900", "cost_center")
+        let transaction1 = new TransactionListEntry("shop", "category", -12.34, true, true, true, "01.01.1900", "cost_center")
         this.add(transaction1)
-        let transaction2 = new Transaction("shop", "category", 12.34, true, true, true, "01.01.1900", "cost_center")
+        let transaction2 = new TransactionListEntry("shop", "category", 12.34, true, true, true, "01.01.1900", "cost_center")
         this.add(transaction2)
-        let transaction3 = new Transaction("shop", "category", -12.34, true, true, false, "01.01.1900", "cost_center")
+        let transaction3 = new TransactionListEntry("shop", "category", -12.34, true, true, false, "01.01.1900", "cost_center")
         this.add(transaction3)
-        let transaction4 = new Transaction("shop", "category", -12.34, true, false, false, "01.01.1900", "cost_center")
+        let transaction4 = new TransactionListEntry("shop", "category", -12.34, true, false, false, "01.01.1900", "cost_center")
         this.add(transaction4)
-        let transaction5 = new Transaction("shop", "category", 12.34, false, true, false, "01.01.1900", "cost_center")
+        let transaction5 = new TransactionListEntry("shop", "category", 12.34, false, true, false, "01.01.1900", "cost_center")
         this.add(transaction5)
 
         let button = new Button("+", "buttonWide")
@@ -24,7 +24,7 @@ export class TransactionList extends Module<HTMLDivElement> {
     }
 }
 
-class Transaction extends Module<HTMLDivElement> {
+class TransactionListEntry extends Module<HTMLDivElement> {
     public constructor(shop: string, category:string, amount: number, isCash: boolean, isTax: boolean, isDraft: boolean, date: string, costCenter: string) {
         super("div", "", "transactionEntry")
         let firstRow = new Module<HTMLDivElement>("div", "", "transactionRow")
