@@ -1,7 +1,7 @@
 import { STRINGS } from "../language/default"
 import { WebFS } from "../webfs/client/webfs"
 
-let HEADER = "date;category;shop;amount;isCash;isTax;isDraft;costCenter;note;uuid"
+let HEADER = "Date;Category;Shop;Amount/€;isCash;isTax;isDraft;Cost center;Note;uuid"
 let FILEPATH = "cashbalance.csv"
 
 export class Transaction {
