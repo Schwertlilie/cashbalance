@@ -15,6 +15,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private taxCheckbox: FormCheckbox
     private draftCheckbox: FormCheckbox
     private costCenterRadioButtonGroup: FormRadioButtonGroup
+    private costCenterOtherLabel: FormLabel
     private costCenterOtherInput: FormInput
     private noteInput: FormInput
     public constructor() {
@@ -68,6 +69,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             let amount = Number(this.amountInput.htmlElement.value)
             this.amountInput.value((amount * -1).toFixed(2))
         }
+        radioButtonGroupAmount.value(0)
         this.add(amountCaption)
         this.add(radioButtonGroupAmount)
         this.add(this.amountInput)
@@ -95,25 +97,26 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         // Cost center
         let costCenterCaption = new FormLabel(STRINGS.EDIT_CAPTION_COST_CENTER, "editCaption")
         this.costCenterRadioButtonGroup = new FormRadioButtonGroup("radioCostCenter", STRINGS.EDIT_LIST_COST_CENTER, "editRadioGroup")
-        let costCenterOtherLabel = new FormLabel(STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1] + ": ")
+        this.costCenterOtherLabel = new FormLabel(STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1] + ": ")
         this.costCenterOtherInput = new FormInput("inputCostCenterOther", STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1], "text")
-        costCenterOtherLabel.hide()
+        this.costCenterOtherLabel.hide()
         this.costCenterOtherInput.hide()
         this.costCenterOtherInput.onChange = (value: string) => {
             this.costCenterOtherInput.value(value.replaceAll(";", ","))
         }
         this.costCenterRadioButtonGroup.onChange = (selectedIndex: number) => {
             if (selectedIndex == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
-                costCenterOtherLabel.show()
+                this.costCenterOtherLabel.show()
                 this.costCenterOtherInput.show()
             } else {
-                costCenterOtherLabel.hide()
+                this.costCenterOtherLabel.hide()
                 this.costCenterOtherInput.hide()
             }
         }
+        this.costCenterRadioButtonGroup.value(0)
         this.add(costCenterCaption)
         this.add(this.costCenterRadioButtonGroup)
-        this.add(costCenterOtherLabel)
+        this.add(this.costCenterOtherLabel)
         this.add(this.costCenterOtherInput)
         
         // Notes
