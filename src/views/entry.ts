@@ -1,5 +1,6 @@
 import { iconCash, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
+import { makeid } from '../utils/makeid';
 import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup } from '../webui/form';
 import { Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
@@ -136,6 +137,8 @@ export class Entry extends Module<HTMLDivElement> {
             costCenter = STRINGS.ENTRY_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
         }
 
+        let uuid = makeid(32)
+
         csvString = [
             this.categoryInput.value(),
             this.shopInput.value(),
@@ -145,6 +148,7 @@ export class Entry extends Module<HTMLDivElement> {
             this.draftCheckbox.value()?"1":"0",
             costCenter,
             this.noteInput.value(),
+            uuid,
         ].join(";")
         console.log(csvString)
         return csvString
