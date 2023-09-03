@@ -5,6 +5,9 @@ export class English {
         return format.replace("{count}", num.toString())
     }
 
+    public static ERROR_INVALID_SESSION = "No valid session opened, go back to login."
+    public static ERROR_SAVE_FILE = "Cannot save file. It was either changed on the server or you have too weak internet."
+
     public static TIME_LOCALE = "en"
     public static TIME_YESTERDAY = "yesterday"
     public static TIME_HOURS_AGO = "{count} hour(s) ago"
@@ -23,22 +26,22 @@ export class English {
     public static LOGIN_ERROR_MISSING_INPUTS = "You must provide all fields (session name, api endpoint and api token)."
     public static LOGIN_ERROR_LOGIN_FAILED = "The provided login information is wrong. Is the URL and API token correct?"
 
-    public static ENTRY_CAPTION_CATEGORY = "Category"
-    public static ENTRY_CAPTION_SHOP = "Shop"
-    public static ENTRY_CAPTION_AMOUNT = "Amount"
-    public static ENTRY_CAPTION_RECEIPT = "Receipt"
-    public static ENTRY_CAPTION_COST_CENTER = "Cost center"
-    public static ENTRY_CAPTION_NOTE = "Note"
-    public static ENTRY_RADIO_IN = "In"
-    public static ENTRY_RADIO_OUT = "Out"
-    public static ENTRY_CHECKBOX_CASH = "Cash"
-    public static ENTRY_CHECKBOX_TAX = "Tax"
-    public static ENTRY_CHECKBOX_DRAFT = "Draft"
-    public static ENTRY_BUTTON_SAVE = "Save"
-    public static ENTRY_PLACEHOLDER_CATEGORY = "Alimentary"
-    public static ENTRY_PLACEHOLDER_SHOP = "Rewe"
-    public static ENTRY_PLACEHOLDER_AMOUNT = "0.00"
-    public static ENTRY_PLACEHOLDER_RECEIPT = "/path/to/receipt.png"
-    public static ENTRY_PLACEHOLDER_NOTE = ""
-    public static ENTRY_LIST_COST_CENTER = ["XF", "MF", "IF", "Other"]
+    public static EDIT_CAPTION_CATEGORY = "Category"
+    public static EDIT_CAPTION_SHOP = "Shop"
+    public static EDIT_CAPTION_AMOUNT = "Amount"
+    public static EDIT_CAPTION_RECEIPT = "Receipt"
+    public static EDIT_CAPTION_COST_CENTER = "Cost center"
+    public static EDIT_CAPTION_NOTE = "Note"
+    public static EDIT_RADIO_IN = "In"
+    public static EDIT_RADIO_OUT = "Out"
+    public static EDIT_CHECKBOX_CASH = "Cash"
+    public static EDIT_CHECKBOX_TAX = "Tax"
+    public static EDIT_CHECKBOX_DRAFT = "Draft"
+    public static EDIT_BUTTON_SAVE = "Save"
+    public static EDIT_PLACEHOLDER_CATEGORY = "Alimentary"
+    public static EDIT_PLACEHOLDER_SHOP = "Rewe"
+    public static EDIT_PLACEHOLDER_AMOUNT = "0.00"
+    public static EDIT_PLACEHOLDER_RECEIPT = "/path/to/receipt.png"
+    public static EDIT_PLACEHOLDER_NOTE = ""
+    public static EDIT_LIST_COST_CENTER = ["XF", "MF", "IF", "Other"]
 }

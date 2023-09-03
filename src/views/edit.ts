@@ -4,9 +4,9 @@ import { makeid } from '../utils/makeid';
 import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup } from '../webui/form';
 import { Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
-import './entry.css'
+import './edit.css'
 
-export class Entry extends Module<HTMLDivElement> {
+export class TransactionEdit extends Module<HTMLDivElement> {
     private categoryInput: FormInput
     private shopInput: FormInput
     private amountInput: FormInput
@@ -17,11 +17,11 @@ export class Entry extends Module<HTMLDivElement> {
     private costCenterOtherInput: FormInput
     private noteInput: FormInput
     public constructor() {
-        super("div", "", "entry")
+        super("div", "", "editTransaction")
         
         // Category
-        let categoryCaption = new FormLabel(STRINGS.ENTRY_CAPTION_CATEGORY, "entryCaption")
-        this.categoryInput = new FormInput("inputCategory", STRINGS.ENTRY_PLACEHOLDER_CATEGORY, "text")
+        let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
+        this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_PLACEHOLDER_CATEGORY, "text")
         this.categoryInput.onChange = (value: string) => {
             this.categoryInput.value(value.replaceAll(";", ","))
         }
@@ -29,8 +29,8 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(this.categoryInput)
 
         // Shop
-        let shopCaption = new FormLabel(STRINGS.ENTRY_CAPTION_SHOP, "entryCaption")
-        this.shopInput = new FormInput("inputShop", STRINGS.ENTRY_PLACEHOLDER_SHOP, "text")
+        let shopCaption = new FormLabel(STRINGS.EDIT_CAPTION_SHOP, "editCaption")
+        this.shopInput = new FormInput("inputShop", STRINGS.EDIT_PLACEHOLDER_SHOP, "text")
         this.shopInput.onChange = (value: string) => {
             this.shopInput.value(value.replaceAll(";", ","))
         }
@@ -38,9 +38,9 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(this.shopInput)
 
         // Amount
-        let amountCaption = new FormLabel(STRINGS.ENTRY_CAPTION_AMOUNT, "entryCaption")
-        let radioButtonGroupAmount = new FormRadioButtonGroup("radioAmount", [STRINGS.ENTRY_RADIO_IN, STRINGS.ENTRY_RADIO_OUT], "entryRadioGroup")
-        this.amountInput = new FormInput("inputAmount", STRINGS.ENTRY_PLACEHOLDER_AMOUNT, "number")
+        let amountCaption = new FormLabel(STRINGS.EDIT_CAPTION_AMOUNT, "editCaption")
+        let radioButtonGroupAmount = new FormRadioButtonGroup("radioAmount", [STRINGS.EDIT_RADIO_IN, STRINGS.EDIT_RADIO_OUT], "editRadioGroup")
+        this.amountInput = new FormInput("inputAmount", STRINGS.EDIT_PLACEHOLDER_AMOUNT, "number")
         let amountCurrencyLabel = new FormLabel(" €")
         this.amountInput.onChange = (value: string) => {
             let amount = Number(value)
@@ -67,18 +67,18 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(amountCurrencyLabel)
         
         // Tags
-        let tagDiv = new Module<HTMLDivElement>("div", "", "entryTag")
-        this.cashCheckbox = new FormCheckbox("checkboxCash", iconCash + " " + STRINGS.ENTRY_CHECKBOX_CASH, "entryIcon", false)
-        this.taxCheckbox = new FormCheckbox("checkboxTax", iconTax + " " + STRINGS.ENTRY_CHECKBOX_TAX, "entryIcon", false)
-        this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.ENTRY_CHECKBOX_DRAFT, "", true)
+        let tagDiv = new Module<HTMLDivElement>("div", "", "editTag")
+        this.cashCheckbox = new FormCheckbox("checkboxCash", iconCash + " " + STRINGS.EDIT_CHECKBOX_CASH, "editIcon", false)
+        this.taxCheckbox = new FormCheckbox("checkboxTax", iconTax + " " + STRINGS.EDIT_CHECKBOX_TAX, "editIcon", false)
+        this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.EDIT_CHECKBOX_DRAFT, "", true)
         this.add(tagDiv)
         tagDiv.add(this.cashCheckbox)
         tagDiv.add(this.taxCheckbox)
         tagDiv.add(this.draftCheckbox)
         
         // Receipt
-        let receiptCaption = new FormLabel(STRINGS.ENTRY_CAPTION_RECEIPT, "entryCaption")
-        let receiptInput = new FormInput("inputReceipt", STRINGS.ENTRY_PLACEHOLDER_RECEIPT, "text")
+        let receiptCaption = new FormLabel(STRINGS.EDIT_CAPTION_RECEIPT, "editCaption")
+        let receiptInput = new FormInput("inputReceipt", STRINGS.EDIT_PLACEHOLDER_RECEIPT, "text")
         receiptInput.onChange = (value: string) => {
             receiptInput.value(value.replaceAll(";", ","))
         }
@@ -86,17 +86,17 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(receiptInput)
 
         // Cost center
-        let costCenterCaption = new FormLabel(STRINGS.ENTRY_CAPTION_COST_CENTER, "entryCaption")
-        this.costCenterRadioButtonGroup = new FormRadioButtonGroup("radioCostCenter", STRINGS.ENTRY_LIST_COST_CENTER, "entryRadioGroup")
-        let costCenterOtherLabel = new FormLabel(STRINGS.ENTRY_LIST_COST_CENTER[3] + ": ")
-        this.costCenterOtherInput = new FormInput("inputCostCenterOther", STRINGS.ENTRY_LIST_COST_CENTER[3], "text")
+        let costCenterCaption = new FormLabel(STRINGS.EDIT_CAPTION_COST_CENTER, "editCaption")
+        this.costCenterRadioButtonGroup = new FormRadioButtonGroup("radioCostCenter", STRINGS.EDIT_LIST_COST_CENTER, "editRadioGroup")
+        let costCenterOtherLabel = new FormLabel(STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1] + ": ")
+        this.costCenterOtherInput = new FormInput("inputCostCenterOther", STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1], "text")
         costCenterOtherLabel.hide()
         this.costCenterOtherInput.hide()
         this.costCenterOtherInput.onChange = (value: string) => {
             this.costCenterOtherInput.value(value.replaceAll(";", ","))
         }
         this.costCenterRadioButtonGroup.onChange = (selectedIndex: number) => {
-            if (selectedIndex == STRINGS.ENTRY_LIST_COST_CENTER.length - 1) {
+            if (selectedIndex == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
                 costCenterOtherLabel.show()
                 this.costCenterOtherInput.show()
             } else {
@@ -110,8 +110,8 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(this.costCenterOtherInput)
         
         // Notes
-        let noteCaption = new FormLabel(STRINGS.ENTRY_CAPTION_NOTE, "entryCaption")
-        this.noteInput = new FormInput("inputNote", STRINGS.ENTRY_PLACEHOLDER_NOTE, "text")
+        let noteCaption = new FormLabel(STRINGS.EDIT_CAPTION_NOTE, "editCaption")
+        this.noteInput = new FormInput("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "text")
         this.noteInput.onChange = (value: string) => {
             this.noteInput.value(value.replaceAll(";", ","))
         }
@@ -119,30 +119,31 @@ export class Entry extends Module<HTMLDivElement> {
         this.add(this.noteInput)
 
         // Save button
-        let saveButton = new Button(STRINGS.ENTRY_BUTTON_SAVE, "buttonWide")
+        let saveButton = new Button(STRINGS.EDIT_BUTTON_SAVE, "buttonWide")
         saveButton.onClick = () => {
-            this.saveEntry()
+            this.saveTransaction()
             PageManager.open("transactionList", {})
         }
         this.add(saveButton)
     }
 
-    private saveEntry(): string {
+    private saveTransaction(): string {
         let csvString: string
         let costCenter: string
 
-        if (this.costCenterRadioButtonGroup.value() == STRINGS.ENTRY_LIST_COST_CENTER.length - 1) {
+        if (this.costCenterRadioButtonGroup.value() == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
             costCenter = this.costCenterOtherInput.value()
         } else {
-            costCenter = STRINGS.ENTRY_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
+            costCenter = STRINGS.EDIT_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
         }
 
         let uuid = makeid(32)
 
+        // TODO convert TransactionEdit values to Transaction, use general save method (data/transaction.ts)
         csvString = [
             this.categoryInput.value(),
             this.shopInput.value(),
-            (Number(this.amountInput.value()) * 100).toFixed(0),
+            (Number(this.amountInput.value()) * 100).toFixed(0), // TODO handle internally as number
             this.cashCheckbox.value()?"1":"0",
             this.taxCheckbox.value()?"1":"0",
             this.draftCheckbox.value()?"1":"0",

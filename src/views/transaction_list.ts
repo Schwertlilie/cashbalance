@@ -19,7 +19,7 @@ export class TransactionList extends Module<HTMLDivElement> {
         this.add(transaction5)
 
         let button = new Button("+", "buttonWide")
-        button.onClick = () => {PageManager.open("entry", {})}
+        button.onClick = () => {PageManager.open("edit", {})}
         this.add(button)
     }
 }

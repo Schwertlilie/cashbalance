@@ -5,7 +5,7 @@ import { Login, tryReconnectToLastSession } from './views/login'
 
 import { Overview } from './views/overview'
 import { TransactionList } from './views/transaction_list'
-import { Entry } from './views/entry'
+import { TransactionEdit } from './views/edit'
 
 async function main() {
   setupLanguage()
@@ -17,7 +17,7 @@ async function main() {
       login: new Login(),
       overview: new Overview(),
       transactionList: new TransactionList(),
-      entry: new Entry(),
+      edit: new TransactionEdit(),
     }
   )
 }

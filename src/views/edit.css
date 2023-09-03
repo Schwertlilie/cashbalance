@@ -1,4 +1,4 @@
-.entry {
+.editTransaction {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
     margin-left: 0.1;
@@ -6,26 +6,26 @@
     padding: 0.25em;
 }
 
-.entryCaption {
+.editCaption {
     display: block;
     font-weight: bold;
 }
 
-.entry input {
+.edit input {
     border-radius: var(--radius-large);
     border: 0.1em solid var(--accent-1-bg);
 }
 
-.entryTag div {
+.editTag div {
     display: inline-block;
     margin: 0.25em;
 }
 
-.entryIcon {
+.editIcon {
     height: 1em;
     fill: var(--fg-color-highlight);
 }
 
-.entryRadioGroup div {
+.editRadioGroup div {
     display: inline-block;
 }
