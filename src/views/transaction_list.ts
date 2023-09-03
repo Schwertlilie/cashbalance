@@ -1,32 +1,63 @@
 import './transaction_list.css'
-import { Module } from "../webui/module";
+import { KWARGS, Module } from "../webui/module";
 import { iconCash, iconTax } from '../icons';
 import { Button } from '../webui/form';
 import { PageManager } from '../webui/pagemanager';
+import { WebFS } from '../webfs/client/webfs';
+import { Transaction, loadTransactions } from '../data/transaction';
 
 export class TransactionList extends Module<HTMLDivElement> {
+    private transactions: Transaction[] = []
+    private transactionsContainer: Module<HTMLDivElement>
     public constructor() {
         super("div")
-        let transaction1 = new TransactionListEntry("shop", "category", -12.34, true, true, true, "01.01.1900", "cost_center")
-        this.add(transaction1)
-        let transaction2 = new TransactionListEntry("shop", "category", 12.34, true, true, true, "01.01.1900", "cost_center")
-        this.add(transaction2)
-        let transaction3 = new TransactionListEntry("shop", "category", -12.34, true, true, false, "01.01.1900", "cost_center")
-        this.add(transaction3)
-        let transaction4 = new TransactionListEntry("shop", "category", -12.34, true, false, false, "01.01.1900", "cost_center")
-        this.add(transaction4)
-        let transaction5 = new TransactionListEntry("shop", "category", 12.34, false, true, false, "01.01.1900", "cost_center")
-        this.add(transaction5)
+        this.transactionsContainer = new Module<HTMLDivElement>("div")
+        this.add(this.transactionsContainer)
 
         let button = new Button("+", "buttonWide")
-        button.onClick = () => {PageManager.open("edit", {})}
+        button.onClick = () => {PageManager.open("edit", {uuid: ""})}
         this.add(button)
+    }
+
+    public async update(_kwargs: KWARGS, _changedPage: boolean) {
+        if (WebFS.instance == null) {
+            PageManager.open("login", {})
+        }
+        this.transactionsContainer.htmlElement.innerHTML = ""
+        this.transactions = []
+        let loadReturn = await loadTransactions()
+        if (loadReturn == null) {
+            return
+        }
+        this.transactions = loadReturn.transactions
+        for (let i = 0; i < this.transactions.length; i++) {
+            let transactionListEntry = new TransactionListEntry(
+                this.transactions[i].shop,
+                this.transactions[i].category,
+                this.transactions[i].amount,
+                this.transactions[i].isCash,
+                this.transactions[i].isTax,
+                this.transactions[i].isDraft,
+                this.transactions[i].date,
+                this.transactions[i].costCenter,
+                this.transactions[i].uuid
+            )
+            this.transactionsContainer.add(transactionListEntry)
+        }
     }
 }
 
-class TransactionListEntry extends Module<HTMLDivElement> {
-    public constructor(shop: string, category:string, amount: number, isCash: boolean, isTax: boolean, isDraft: boolean, date: string, costCenter: string) {
+class TransactionListEntry extends Module<HTMLLinkElement> {
+    private uuid: string = ""
+    public constructor(shop: string, category:string, amount: number, isCash: boolean, isTax: boolean, isDraft: boolean, date: string, costCenter: string, uuid: string) {
         super("div", "", "transactionEntry")
+        this.uuid = uuid
+
+        this.htmlElement.onclick = (e: Event) => {
+            e.stopPropagation()
+            this.onClick()
+        }
+
         let firstRow = new Module<HTMLDivElement>("div", "", "transactionRow")
         this.add(firstRow)
         let secondRow = new Module<HTMLDivElement>("div", "", "transactionRow")
@@ -79,5 +110,9 @@ class TransactionListEntry extends Module<HTMLDivElement> {
         let costCenterDiv = new Module<HTMLDivElement>("div", costCenter, "transactionCostCenter")
         secondRow.add(costCenterDiv)
 
+    }
+
+    public onClick() {
+        PageManager.open("edit", {uuid: this.uuid})
     }
 }
