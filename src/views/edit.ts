@@ -39,6 +39,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.categoryInput.onChange = (value: string) => {
             this.categoryInput.value(value.replaceAll(";", ","))
         }
+        this.categoryInput.onChangeDone = (value: string) => {
+            if (value.endsWith(" ")) {
+                this.categoryInput.value(value.slice(0, -1))
+            }
+        }
         this.add(categoryCaption)
         this.add(this.categoryInput)
 
@@ -47,6 +52,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.shopInput = new FormInput("inputShop", STRINGS.EDIT_PLACEHOLDER_SHOP, "text")
         this.shopInput.onChange = (value: string) => {
             this.shopInput.value(value.replaceAll(";", ","))
+        }
+        this.shopInput.onChangeDone = (value: string) => {
+            if (value.endsWith(" ")) {
+                this.shopInput.value(value.slice(0, -1))
+            }
         }
         this.add(shopCaption)
         this.add(this.shopInput)
@@ -110,6 +120,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.costCenterOtherInput.onChange = (value: string) => {
             this.costCenterOtherInput.value(value.replaceAll(";", ","))
         }
+        this.costCenterOtherInput.onChangeDone = (value: string) => {
+            if (value.endsWith(" ")) {
+                this.costCenterOtherInput.value(value.slice(0, -1))
+            }
+        }
         this.costCenterRadioButtonGroup.onChange = (selectedIndex: number) => {
             if (selectedIndex == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
                 this.costCenterOtherLabel.show()
@@ -130,6 +145,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.noteInput = new FormInput("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "text")
         this.noteInput.onChange = (value: string) => {
             this.noteInput.value(value.replaceAll(";", ","))
+        }
+        this.noteInput.onChangeDone = (value: string) => {
+            if (value.endsWith(" ")) {
+                this.noteInput.value(value.slice(0, -1))
+            }
         }
         this.add(noteCaption)
         this.add(this.noteInput)
