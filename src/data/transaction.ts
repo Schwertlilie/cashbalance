@@ -12,7 +12,7 @@ export class Transaction {
         public amount: number = 0,
         public isCash: boolean = false,
         public isTax: boolean = false,
-        public isDraft: boolean = true,
+        public isDraft: boolean = false,
         public costCenter: string = "",
         public note: string = "",
         public uuid: string = "",

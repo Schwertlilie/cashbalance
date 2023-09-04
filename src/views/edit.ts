@@ -162,6 +162,10 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         }
 
         // Set values into form
+        if ((transaction.isDraft == false) && (transaction.date == "")) {
+            let currentDate = new Date()
+            transaction.date = currentDate.toISOString().split("T")[0]
+        }
         this.dateInput.value(transaction.date)
         this.categoryInput.value(transaction.category)
         this.shopInput.value(transaction.shop)
@@ -170,11 +174,15 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.taxCheckbox.value(transaction.isTax)
         this.draftCheckbox.value(transaction.isDraft)
         let costCenterIndex = STRINGS.EDIT_LIST_COST_CENTER.indexOf(transaction.costCenter)
+        if (transaction.costCenter == "") {
+            costCenterIndex = 0
+        }
         if (costCenterIndex == -1) {
             this.costCenterRadioButtonGroup.value(STRINGS.EDIT_LIST_COST_CENTER.length - 1)
             this.costCenterOtherLabel.show()
             this.costCenterOtherInput.show()
             this.costCenterOtherInput.value(transaction.costCenter)
+            
         } else {
             this.costCenterOtherLabel.hide()
             this.costCenterOtherInput.hide()
