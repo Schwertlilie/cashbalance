@@ -23,6 +23,14 @@
     width: -webkit-fill-available;
 }
 
+.editTextArea {
+    width: -webkit-fill-available;
+    height: 5em;
+    border-radius: var(--radius-large);
+    border: 0.1em solid var(--accent-1-bg);
+    padding: 0.5em;
+}
+
 .editTag div {
     display: inline-block;
     margin: 0.25em;

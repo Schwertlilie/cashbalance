@@ -3,7 +3,7 @@ import { iconCash, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
 import { WebFS } from '../webfs/client/webfs';
-import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup } from '../webui/form';
+import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup, FormTextArea } from '../webui/form';
 import { KWARGS, Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
 import './edit.css'
@@ -21,7 +21,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private draftCheckbox: FormCheckbox
     private costCenterRadioButtonGroup: FormRadioButtonGroup
     private costCenterOtherInput: FormInput
-    private noteInput: FormInput
+    private noteInput: FormTextArea
     private saveButton: Button
     public constructor() {
         super("div", "", "editTransaction")
@@ -138,7 +138,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         
         // Notes
         let noteCaption = new FormLabel(STRINGS.EDIT_CAPTION_NOTE, "editCaption")
-        this.noteInput = new FormInput("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "text", "editInput")
+        this.noteInput = new FormTextArea("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "editTextArea")
         this.noteInput.onChange = (value: string) => {
             this.noteInput.value(value.replaceAll(";", ","))
         }
