@@ -95,7 +95,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         let tagDiv = new Module<HTMLDivElement>("div", "", "editTag")
         this.cashCheckbox = new FormCheckbox("checkboxCash", iconCash + " " + STRINGS.EDIT_CHECKBOX_CASH, "editIcon", false)
         this.taxCheckbox = new FormCheckbox("checkboxTax", iconTax + " " + STRINGS.EDIT_CHECKBOX_TAX, "editIcon", false)
-        this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.EDIT_CHECKBOX_DRAFT, "", true)
+        this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.EDIT_CHECKBOX_DRAFT, "", false)
         this.add(tagDiv)
         tagDiv.add(this.cashCheckbox)
         tagDiv.add(this.taxCheckbox)
@@ -189,7 +189,12 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.dateInput.value(transaction.date)
         this.categoryInput.value(transaction.category)
         this.shopInput.value(transaction.shop)
+        if (transaction.amount != 0) {
         this.amountInput.value(transaction.amount.toFixed(2))
+        } else {
+            this.amountInput.value("")
+        }
+        this.amountInput.onChange(this.amountInput.value())
         this.cashCheckbox.value(transaction.isCash)
         this.taxCheckbox.value(transaction.isTax)
         this.draftCheckbox.value(transaction.isDraft)
