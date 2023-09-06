@@ -1,24 +1,40 @@
 .editTransaction {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
-    margin-left: 0.1;
-    margin-right: 0.1;
+    margin-left: 1em;
+    margin-right: 1em;
     padding: 0.25em;
+    display: flexbox;
 }
 
 .editCaption {
     display: block;
     font-weight: bold;
+    padding: 0.25em;
 }
 
-.edit input {
+.editTransaction input {
     border-radius: var(--radius-large);
     border: 0.1em solid var(--accent-1-bg);
+    padding: 0.5em;
+}
+
+.editInput {
+    width: -webkit-fill-available;
 }
 
 .editTag div {
     display: inline-block;
     margin: 0.25em;
+}
+
+.editAmountContainer div {
+    display: inline-block;
+}
+
+.editAmount {
+    width: 8em;
+    margin-left: 1em;
 }
 
 .editIcon {

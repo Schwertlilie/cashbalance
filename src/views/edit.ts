@@ -20,7 +20,6 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private taxCheckbox: FormCheckbox
     private draftCheckbox: FormCheckbox
     private costCenterRadioButtonGroup: FormRadioButtonGroup
-    private costCenterOtherLabel: FormLabel
     private costCenterOtherInput: FormInput
     private noteInput: FormInput
     private saveButton: Button
@@ -29,13 +28,13 @@ export class TransactionEdit extends Module<HTMLDivElement> {
 
         // Date
         let dateCaption = new FormLabel(STRINGS.EDIT_CAPTION_DATE, "editCaption")
-        this.dateInput = new FormInput("inputDate", STRINGS.EDIT_PLACEHOLDER_DATE, "date")
+        this.dateInput = new FormInput("inputDate", STRINGS.EDIT_PLACEHOLDER_DATE, "date", "editInput")
         this.add(dateCaption)
         this.add(this.dateInput)
 
         // Category
         let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
-        this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_PLACEHOLDER_CATEGORY, "text")
+        this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_PLACEHOLDER_CATEGORY, "text", "editInput")
         this.categoryInput.onChange = (value: string) => {
             this.categoryInput.value(value.replaceAll(";", ","))
         }
@@ -49,7 +48,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
 
         // Shop
         let shopCaption = new FormLabel(STRINGS.EDIT_CAPTION_SHOP, "editCaption")
-        this.shopInput = new FormInput("inputShop", STRINGS.EDIT_PLACEHOLDER_SHOP, "text")
+        this.shopInput = new FormInput("inputShop", STRINGS.EDIT_PLACEHOLDER_SHOP, "text", "editInput")
         this.shopInput.onChange = (value: string) => {
             this.shopInput.value(value.replaceAll(";", ","))
         }
@@ -63,8 +62,9 @@ export class TransactionEdit extends Module<HTMLDivElement> {
 
         // Amount
         let amountCaption = new FormLabel(STRINGS.EDIT_CAPTION_AMOUNT, "editCaption")
+        let amountContainer = new Module<HTMLDivElement> ("div", "", "editAmountContainer")
         let radioButtonGroupAmount = new FormRadioButtonGroup("radioAmount", [STRINGS.EDIT_RADIO_IN, STRINGS.EDIT_RADIO_OUT], "editRadioGroup")
-        this.amountInput = new FormInput("inputAmount", STRINGS.EDIT_PLACEHOLDER_AMOUNT, "number")
+        this.amountInput = new FormInput("inputAmount", STRINGS.EDIT_PLACEHOLDER_AMOUNT, "number", "editAmount")
         let amountCurrencyLabel = new FormLabel(" €")
         this.amountInput.onChange = (value: string) => {
             let amount = Number(value)
@@ -87,9 +87,10 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         }
         radioButtonGroupAmount.value(0)
         this.add(amountCaption)
-        this.add(radioButtonGroupAmount)
-        this.add(this.amountInput)
-        this.add(amountCurrencyLabel)
+        amountContainer.add(radioButtonGroupAmount)
+        amountContainer.add(this.amountInput)
+        amountContainer.add(amountCurrencyLabel)
+        this.add(amountContainer)
         
         // Tags
         let tagDiv = new Module<HTMLDivElement>("div", "", "editTag")
@@ -103,7 +104,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         
         // Receipt
         let receiptCaption = new FormLabel(STRINGS.EDIT_CAPTION_RECEIPT, "editCaption")
-        let receiptInput = new FormInput("inputReceipt", STRINGS.EDIT_PLACEHOLDER_RECEIPT, "text")
+        let receiptInput = new FormInput("inputReceipt", STRINGS.EDIT_PLACEHOLDER_RECEIPT, "text", "editInput")
         receiptInput.onChange = (value: string) => {
             receiptInput.value(value.replaceAll(";", ","))
         }
@@ -113,9 +114,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         // Cost center
         let costCenterCaption = new FormLabel(STRINGS.EDIT_CAPTION_COST_CENTER, "editCaption")
         this.costCenterRadioButtonGroup = new FormRadioButtonGroup("radioCostCenter", STRINGS.EDIT_LIST_COST_CENTER, "editRadioGroup")
-        this.costCenterOtherLabel = new FormLabel(STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1] + ": ")
-        this.costCenterOtherInput = new FormInput("inputCostCenterOther", STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1], "text")
-        this.costCenterOtherLabel.hide()
+        this.costCenterOtherInput = new FormInput("inputCostCenterOther", STRINGS.EDIT_LIST_COST_CENTER[STRINGS.EDIT_LIST_COST_CENTER.length - 1], "text", "editInput")
         this.costCenterOtherInput.hide()
         this.costCenterOtherInput.onChange = (value: string) => {
             this.costCenterOtherInput.value(value.replaceAll(";", ","))
@@ -127,22 +126,19 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         }
         this.costCenterRadioButtonGroup.onChange = (selectedIndex: number) => {
             if (selectedIndex == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
-                this.costCenterOtherLabel.show()
                 this.costCenterOtherInput.show()
             } else {
-                this.costCenterOtherLabel.hide()
                 this.costCenterOtherInput.hide()
             }
         }
         this.costCenterRadioButtonGroup.value(0)
         this.add(costCenterCaption)
         this.add(this.costCenterRadioButtonGroup)
-        this.add(this.costCenterOtherLabel)
         this.add(this.costCenterOtherInput)
         
         // Notes
         let noteCaption = new FormLabel(STRINGS.EDIT_CAPTION_NOTE, "editCaption")
-        this.noteInput = new FormInput("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "text")
+        this.noteInput = new FormInput("inputNote", STRINGS.EDIT_PLACEHOLDER_NOTE, "text", "editInput")
         this.noteInput.onChange = (value: string) => {
             this.noteInput.value(value.replaceAll(";", ","))
         }
@@ -190,7 +186,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.categoryInput.value(transaction.category)
         this.shopInput.value(transaction.shop)
         if (transaction.amount != 0) {
-        this.amountInput.value(transaction.amount.toFixed(2))
+            this.amountInput.value(transaction.amount.toFixed(2))
         } else {
             this.amountInput.value("")
         }
@@ -204,12 +200,10 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         }
         if (costCenterIndex == -1) {
             this.costCenterRadioButtonGroup.value(STRINGS.EDIT_LIST_COST_CENTER.length - 1)
-            this.costCenterOtherLabel.show()
             this.costCenterOtherInput.show()
             this.costCenterOtherInput.value(transaction.costCenter)
             
         } else {
-            this.costCenterOtherLabel.hide()
             this.costCenterOtherInput.hide()
             this.costCenterRadioButtonGroup.value(costCenterIndex)
         }
