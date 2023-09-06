@@ -48,7 +48,7 @@
 }
 
 .transactionDate {
-    width: 5em;
+    width: 5.5em;
     float: right;
     font-style: italic;
     text-align: right;
@@ -56,7 +56,7 @@
 
 .transactionIcon {
     float: right;
-    width: 1em;
+    width: 1.1em;
     height: 1em;
     fill: var(--color-base-disabled);
 }
@@ -70,7 +70,7 @@
 }
 
 .transactionAmount {
-    width: 5em;
+    width: 5.5em;
     float: right;
     font-weight: bold;
     text-align: right;
