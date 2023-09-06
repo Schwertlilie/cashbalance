@@ -2,7 +2,7 @@
     margin-left: 0.1;
     margin-right: 0.1;
     padding: 0.5em;
-    border-bottom: 0.1em solid var(--accent-1-bg);
+    border-bottom: 0.1em solid var(--color-base-c);
 }
 
 .transactionsContainer {
@@ -20,8 +20,8 @@
 }
 
 .transactionAddButton {
-    background-color: var(--accent-1-bg);
-    color: var(--accent-1-fg);
+    background-color: var(--color-brand);
+    color: var(--color-brand-c);
     font-size: 2em;
     font-weight: bold;
     border-radius: var(--radius-round);
@@ -36,7 +36,7 @@
 }
 
 .transactionAddButton:hover {
-    background-color: var(--accent-1-bg-hover);
+    background-color: var(--color-brand-hover);
 }
 
 .transactionRow div {
@@ -44,7 +44,7 @@
 }
 
 .transactionDraft {
-    color: var(--fg-color-gray);
+    color: var(--color-base-disabled);
 }
 
 .transactionDate {
@@ -52,18 +52,17 @@
     float: right;
     font-style: italic;
     text-align: right;
-    color: var(--fg-color-gray);
 }
 
 .transactionIcon {
     float: right;
     width: 1em;
     height: 1em;
-    fill: var(--fg-color-gray);
+    fill: var(--color-base-disabled);
 }
 
 .transactionIconActive {
-    fill: var(--fg-color-highlight);
+    fill: var(--color-accent);
 }
 
 .transactionCostCenter {
@@ -78,5 +77,5 @@
 }
 
 .transactionAmountNegative {
-    color: var(--negative-amount);
+    color: var(--color-bad);
 }

@@ -21,7 +21,7 @@
 
 .editTransaction input {
     border-radius: var(--radius-large);
-    border: 0.1em solid var(--accent-1-bg);
+    border: 0.1em solid var(--color-base-c);
     padding: 0.5em;
 }
 
@@ -33,7 +33,7 @@
     width: -webkit-fill-available;
     height: 5em;
     border-radius: var(--radius-large);
-    border: 0.1em solid var(--accent-1-bg);
+    border: 0.1em solid var(--color-base-c);
     padding: 0.5em;
 }
 
@@ -53,7 +53,7 @@
 
 .editIcon {
     height: 1em;
-    fill: var(--fg-color-highlight);
+    fill: var(--color-accent);
 }
 
 .editRadioGroup div {
