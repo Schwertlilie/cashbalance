@@ -31,6 +31,7 @@ export class English {
     public static LOGIN_ERROR_MISSING_INPUTS = "You must provide all fields (session name, api endpoint and api token)."
     public static LOGIN_ERROR_LOGIN_FAILED = "The provided login information is wrong. Is the URL and API token correct?"
 
+    public static EDIT_TITLE = "Edit transaction"
     public static EDIT_CAPTION_DATE = "Date"
     public static EDIT_CAPTION_CATEGORY = "Category"
     public static EDIT_CAPTION_SHOP = "Shop"

@@ -5,6 +5,7 @@ export class German extends English {
 
     //public static APPNAME = "Kassenbuch"
 
+    public static EDIT_TITLE = "Eintrag editieren"
     public static EDIT_CAPTION_DATE = "Datum"
     public static EDIT_CAPTION_CATEGORY = "Kategorie"
     public static EDIT_CAPTION_SHOP = "Handelspartner"

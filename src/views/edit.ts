@@ -4,6 +4,7 @@ import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
 import { WebFS } from '../webfs/client/webfs';
 import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup, FormTextArea } from '../webui/form';
+import { iconArrowLeft } from '../webui/icons/icons';
 import { KWARGS, Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
 import './edit.css'
@@ -24,13 +25,24 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private noteInput: FormTextArea
     private saveButton: Button
     public constructor() {
-        super("div", "", "editTransaction")
+        super("div", "")
+        let editTitleBar = new Module<HTMLDivElement>("div", "", "editTitleBar")
+        let backButton = new Button(iconArrowLeft, "backButton")
+        backButton.onClick = () => {
+            history.back()
+        }
+        let editTitleBarText = new Module<HTMLDivElement>("div", STRINGS.EDIT_TITLE, "editTitleBarText")
+        editTitleBar.add(backButton)
+        editTitleBar.add(editTitleBarText)
+        this.add(editTitleBar)
+
+        let editContent = new Module<HTMLDivElement>("div", "", "editTransaction")
 
         // Date
         let dateCaption = new FormLabel(STRINGS.EDIT_CAPTION_DATE, "editCaption")
         this.dateInput = new FormInput("inputDate", STRINGS.EDIT_PLACEHOLDER_DATE, "date", "editInput")
-        this.add(dateCaption)
-        this.add(this.dateInput)
+        editContent.add(dateCaption)
+        editContent.add(this.dateInput)
 
         // Category
         let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
@@ -43,8 +55,8 @@ export class TransactionEdit extends Module<HTMLDivElement> {
                 this.categoryInput.value(value.slice(0, -1))
             }
         }
-        this.add(categoryCaption)
-        this.add(this.categoryInput)
+        editContent.add(categoryCaption)
+        editContent.add(this.categoryInput)
 
         // Shop
         let shopCaption = new FormLabel(STRINGS.EDIT_CAPTION_SHOP, "editCaption")
@@ -57,8 +69,8 @@ export class TransactionEdit extends Module<HTMLDivElement> {
                 this.shopInput.value(value.slice(0, -1))
             }
         }
-        this.add(shopCaption)
-        this.add(this.shopInput)
+        editContent.add(shopCaption)
+        editContent.add(this.shopInput)
 
         // Amount
         let amountCaption = new FormLabel(STRINGS.EDIT_CAPTION_AMOUNT, "editCaption")
@@ -86,18 +98,18 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             this.amountInput.value((amount * -1).toFixed(2))
         }
         radioButtonGroupAmount.value(0)
-        this.add(amountCaption)
+        editContent.add(amountCaption)
         amountContainer.add(radioButtonGroupAmount)
         amountContainer.add(this.amountInput)
         amountContainer.add(amountCurrencyLabel)
-        this.add(amountContainer)
+        editContent.add(amountContainer)
         
         // Tags
         let tagDiv = new Module<HTMLDivElement>("div", "", "editTag")
         this.cashCheckbox = new FormCheckbox("checkboxCash", iconCash + " " + STRINGS.EDIT_CHECKBOX_CASH, "editIcon", false)
         this.taxCheckbox = new FormCheckbox("checkboxTax", iconTax + " " + STRINGS.EDIT_CHECKBOX_TAX, "editIcon", false)
         this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.EDIT_CHECKBOX_DRAFT, "", false)
-        this.add(tagDiv)
+        editContent.add(tagDiv)
         tagDiv.add(this.cashCheckbox)
         tagDiv.add(this.taxCheckbox)
         tagDiv.add(this.draftCheckbox)
@@ -108,8 +120,8 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         receiptInput.onChange = (value: string) => {
             receiptInput.value(value.replaceAll(";", ","))
         }
-        this.add(receiptCaption)
-        this.add(receiptInput)
+        editContent.add(receiptCaption)
+        editContent.add(receiptInput)
 
         // Cost center
         let costCenterCaption = new FormLabel(STRINGS.EDIT_CAPTION_COST_CENTER, "editCaption")
@@ -132,9 +144,9 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             }
         }
         this.costCenterRadioButtonGroup.value(0)
-        this.add(costCenterCaption)
-        this.add(this.costCenterRadioButtonGroup)
-        this.add(this.costCenterOtherInput)
+        editContent.add(costCenterCaption)
+        editContent.add(this.costCenterRadioButtonGroup)
+        editContent.add(this.costCenterOtherInput)
         
         // Notes
         let noteCaption = new FormLabel(STRINGS.EDIT_CAPTION_NOTE, "editCaption")
@@ -147,13 +159,15 @@ export class TransactionEdit extends Module<HTMLDivElement> {
                 this.noteInput.value(value.slice(0, -1))
             }
         }
-        this.add(noteCaption)
-        this.add(this.noteInput)
+        editContent.add(noteCaption)
+        editContent.add(this.noteInput)
 
         // Save button
         this.saveButton = new Button(STRINGS.EDIT_BUTTON_SAVE, "buttonWide")
         this.saveButton.onClick = this.saveTransaction.bind(this)
-        this.add(this.saveButton)
+        editContent.add(this.saveButton)
+
+        this.add(editContent)
     }
 
     public async update(kwargs: KWARGS, _changedPage: boolean) {
