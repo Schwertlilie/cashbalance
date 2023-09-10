@@ -5,12 +5,17 @@ import { Button } from '../webui/form';
 import { PageManager } from '../webui/pagemanager';
 import { WebFS } from '../webfs/client/webfs';
 import { Transaction, loadTransactions } from '../data/transaction';
+import { STRINGS } from '../language/default';
+import { formatDateAsGermanString } from '../webui/utils/humanFriendlyDates';
 
 export class TransactionList extends Module<HTMLDivElement> {
     private transactions: Transaction[] = []
     private transactionsContainer: Module<HTMLDivElement>
     public constructor() {
         super("div")
+        let transactionsTitleBar = new Module<HTMLDivElement>("div", STRINGS.APPNAME, "transactionsTitleBar")
+        this.add(transactionsTitleBar)
+
         this.transactionsContainer = new Module<HTMLDivElement>("div", "", "transactionsContainer")
         this.add(this.transactionsContainer)
 
@@ -30,6 +35,22 @@ export class TransactionList extends Module<HTMLDivElement> {
             return
         }
         this.transactions = loadReturn.transactions
+
+        let validTransactions = this.transactions.filter((x) => !x.isDraft)
+        let dates = validTransactions.map((x: Transaction) => new Date(x.date))
+        let startDate = dates.reduce((x, y) => x<y?x:y)
+        let startDateString = formatDateAsGermanString(startDate)
+
+        let endDate = dates.reduce((x, y) => x>y?x:y)
+        let endDateString = formatDateAsGermanString(endDate)
+
+        let summary = STRINGS.TRANSACTION_LIST_SUMMARY
+        summary = summary.replace("{count}", this.transactions.length.toString())
+        summary = summary.replace("{startDate}", startDateString)
+        summary = summary.replace("{endDate}", endDateString)
+        let transactionSummary = new Module<HTMLDivElement>("div", summary, "transactionSummary")
+        this.transactionsContainer.add(transactionSummary)
+
         for (let i = 0; i < this.transactions.length; i++) {
             let transactionListEntry = new TransactionListEntry(
                 this.transactions[i].shop,
@@ -69,7 +90,13 @@ class TransactionListEntry extends Module<HTMLLinkElement> {
         }
         firstRow.add(shopDiv)
 
-        let dateDiv = new Module<HTMLDivElement>("div", date, "transactionDate")
+        let dateString = ""
+        if (date != "") {
+            dateString = formatDateAsGermanString(new Date(date))
+        } else {
+            dateString = STRINGS.TIME_EMPTY
+        }
+        let dateDiv = new Module<HTMLDivElement>("div", dateString, "transactionDate")
         if (isDraft) {
             dateDiv.setClass("transactionDraft")
         }

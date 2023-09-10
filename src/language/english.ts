@@ -20,9 +20,10 @@ export class English {
     public static TIME_SECONDS_AGO = "{count} second(s) ago"
     public static TIME_TODAY_AT = "today at"
     public static TIME_JUST_NOW = "just now"
+    public static TIME_EMPTY = "unknown"
 
     public static APPNAME = "Cashbalance"
-
+    
     public static LOGIN_KNOWN_CONNECTIONS = "Reuse Connection"
     public static LOGIN_SESSION_NAME = "Session Name"
     public static LOGIN_API_ENDPOINT_LABEL = "API Endpoint URL"
@@ -31,6 +32,8 @@ export class English {
     public static LOGIN_ERROR_MISSING_INPUTS = "You must provide all fields (session name, api endpoint and api token)."
     public static LOGIN_ERROR_LOGIN_FAILED = "The provided login information is wrong. Is the URL and API token correct?"
 
+    public static TRANSACTION_LIST_SUMMARY = "{count} transactions, {startDate} - {endDate}"
+    
     public static EDIT_TITLE = "Edit transaction"
     public static EDIT_CAPTION_DATE = "Date"
     public static EDIT_CAPTION_CATEGORY = "Category"

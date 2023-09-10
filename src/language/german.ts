@@ -5,6 +5,10 @@ export class German extends English {
 
     //public static APPNAME = "Kassenbuch"
 
+    public static TRANSACTION_LIST_SUMMARY = "{count} Einträge, {startDate} - {endDate}"
+
+    public static TIME_EMPTY = "unbekannt"
+    
     public static EDIT_TITLE = "Eintrag editieren"
     public static EDIT_CAPTION_DATE = "Datum"
     public static EDIT_CAPTION_CATEGORY = "Kategorie"
