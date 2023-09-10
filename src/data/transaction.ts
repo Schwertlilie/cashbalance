@@ -109,6 +109,7 @@ export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
     } else {
         md5 = newMd5
     }
+    transactions = sortTransactions(transactions)
     return {"transactions": transactions, "md5": md5}
 }
 
@@ -133,4 +134,13 @@ export function getTransactionListIndex(transactions: Transaction[], uuid: strin
         }
     }
     return -1
+}
+
+export function sortTransactions(transactions: Transaction[]): Transaction[] {
+    /**
+     * Sorts transactions by descending date. Puts drafts always at top.
+     */
+    transactions = transactions.sort((x, y) => y.date.localeCompare(x.date))
+    transactions = transactions.sort((x, y) => Number(y.isDraft) - Number(x.isDraft))
+    return transactions
 }
