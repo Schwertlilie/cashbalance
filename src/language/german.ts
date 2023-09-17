@@ -27,4 +27,5 @@ export class German extends English {
     public static EDIT_PLACEHOLDER_SHOP = "Rewe"
     public static EDIT_PLACEHOLDER_RECEIPT = "/path/to/receipt.png"
     public static EDIT_LIST_COST_CENTER = ["XF", "MF", "IF", "Andere"]
+    public static EDIT_LIST_CATEGORY = ["Lebensmittel & Haushalt", "Ausgehen", "Mobilität & Reise", "Hausrat", "Kleidung", "Medikamente", "Hobby", "Geschenke", "Nebenkosten", "Urlaub", "Sonstige"]
 }

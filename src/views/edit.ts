@@ -3,7 +3,7 @@ import { iconCash, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
 import { WebFS } from '../webfs/client/webfs';
-import { Button, FormCheckbox, FormInput, FormLabel, FormRadioButtonGroup, FormTextArea } from '../webui/form';
+import { Button, FormCheckbox, FormDropdown, FormInput, FormLabel, FormRadioButtonGroup, FormTextArea } from '../webui/form';
 import { iconArrowLeft } from '../webui/icons/icons';
 import { KWARGS, Module } from '../webui/module';
 import { PageManager } from '../webui/pagemanager';
@@ -14,6 +14,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private transactions: Transaction[] = []
     private uuid: string = ""
     private dateInput: FormInput
+    private categoryDropdown: FormDropdown
     private categoryInput: FormInput
     private shopInput: FormInput
     private amountInput: FormInput
@@ -46,7 +47,9 @@ export class TransactionEdit extends Module<HTMLDivElement> {
 
         // Category
         let categoryCaption = new FormLabel(STRINGS.EDIT_CAPTION_CATEGORY, "editCaption")
-        this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_PLACEHOLDER_CATEGORY, "text", "editInput")
+        this.categoryDropdown = new FormDropdown("dropdownCategory", STRINGS.EDIT_LIST_CATEGORY, "editDropdown", "")
+        this.categoryInput = new FormInput("inputCategory", STRINGS.EDIT_LIST_CATEGORY[STRINGS.EDIT_LIST_CATEGORY.length - 1], "text", "editInput")
+        this.categoryInput.hide()
         this.categoryInput.onChange = (value: string) => {
             this.categoryInput.value(value.replaceAll(";", ","))
         }
@@ -55,7 +58,16 @@ export class TransactionEdit extends Module<HTMLDivElement> {
                 this.categoryInput.value(value.slice(0, -1))
             }
         }
+        this.categoryDropdown.onChange = (value: string) => {
+            if (value == STRINGS.EDIT_LIST_CATEGORY[STRINGS.EDIT_LIST_CATEGORY.length - 1]) {
+                this.categoryInput.show()
+            } else {
+                this.categoryInput.hide()
+            }
+        }
+        this.categoryDropdown.value(STRINGS.EDIT_LIST_CATEGORY[0])
         editContent.add(categoryCaption)
+        editContent.add(this.categoryDropdown)
         editContent.add(this.categoryInput)
 
         // Shop
@@ -197,6 +209,20 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             transaction.date = currentDate.toISOString().split("T")[0]
         }
         this.dateInput.value(transaction.date)
+        let categoryIndex = STRINGS.EDIT_LIST_CATEGORY.indexOf(transaction.category)
+        if (transaction.category == "") {
+            categoryIndex = 0
+        } else if (categoryIndex == STRINGS.EDIT_LIST_CATEGORY.length - 1) {
+            categoryIndex = -1
+        }
+        if (categoryIndex == -1) {
+            this.categoryDropdown.value(STRINGS.EDIT_LIST_CATEGORY[STRINGS.EDIT_LIST_CATEGORY.length - 1])
+            this.categoryInput.show()
+            this.categoryInput.value(transaction.category)
+        } else {
+            this.categoryDropdown.value(STRINGS.EDIT_LIST_CATEGORY[categoryIndex])
+            this.categoryInput.hide()
+        }
         this.categoryInput.value(transaction.category)
         this.shopInput.value(transaction.shop)
         if (transaction.amount != 0) {
@@ -242,6 +268,13 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     
     private getTransactionFromInput(): Transaction | null {
         let transaction: Transaction = new Transaction()
+
+        let category: string
+        if (this.categoryDropdown.value() == STRINGS.EDIT_LIST_CATEGORY[STRINGS.EDIT_LIST_CATEGORY.length -1]) {
+            category = this.categoryInput.value()
+        } else {
+            category = this.categoryDropdown.value()
+        }
         
         let costCenter: string
         if (this.costCenterRadioButtonGroup.value() == STRINGS.EDIT_LIST_COST_CENTER.length - 1) {
@@ -250,12 +283,12 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             costCenter = STRINGS.EDIT_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
         }
         
-        if (this.checkInputs(costCenter) == false) {
+        if (this.checkInputs(category, costCenter) == false) {
             return null
         }
         
         transaction.date = this.dateInput.value()
-        transaction.category = this.categoryInput.value()
+        transaction.category = category
         transaction.shop = this.shopInput.value()
         transaction.amount = Number(this.amountInput.value())
         transaction.isCash = this.cashCheckbox.value()?true:false
@@ -268,13 +301,13 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         return transaction
     }
     
-    private checkInputs(costCenter: string): boolean {
+    private checkInputs(category: string, costCenter: string): boolean {
         if (!this.draftCheckbox.value()){
             if (this.dateInput.value() == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "date.")
                 return false
             }
-            if (this.categoryInput.value() == "") {
+            if (category == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "category.")
                 return false
             }

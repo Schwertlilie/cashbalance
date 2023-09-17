@@ -56,4 +56,5 @@ export class English {
     public static EDIT_PLACEHOLDER_NOTE = ""
     public static EDIT_PLACEHOLDER_COST_CENTER = "XF"
     public static EDIT_LIST_COST_CENTER = ["XF", "MF", "IF", "Other"]
+    public static EDIT_LIST_CATEGORY = ["Other"]
 }

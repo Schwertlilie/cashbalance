@@ -58,6 +58,14 @@
     width: -webkit-fill-available;
 }
 
+.editDropdown {
+    border-radius: var(--radius-large);
+    border: 0.1em solid var(--color-base-c);
+    padding: 0.5em;
+    width: -webkit-fill-available;
+    margin-bottom: 0.2em;
+}
+
 .editTextArea {
     width: -webkit-fill-available;
     height: 5em;
