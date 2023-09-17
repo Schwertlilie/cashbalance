@@ -1,4 +1,4 @@
-import { Transaction, getTransactionListIndex, loadTransactions, storeTransactions } from '../data/transaction';
+import { Transaction, getTransactionListIndex, loadTransactions, sortTransactions, storeTransactions } from '../data/transaction';
 import { iconCash, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
@@ -229,14 +229,8 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         let transaction = this.getTransactionFromInput()
         if (transaction == null) {
             return
-        }
-        
-        // Replace old transaction or append new
-        let index = getTransactionListIndex(this.transactions, this.uuid)
-        if (index != -1) {
-            this.transactions[index] = transaction
         } else {
-            this.transactions.push(transaction) 
+            this.appendTransaction(transaction)
         }
         
         // Save transactions
@@ -293,5 +287,14 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         transaction.uuid = this.uuid
 
         return transaction
+    }
+    private appendTransaction(transaction: Transaction) {
+        let index = getTransactionListIndex(this.transactions, this.uuid)
+        if (index != -1) {
+            this.transactions[index] = transaction
+        } else {
+            this.transactions.unshift(transaction)
+        }
+        this.transactions = sortTransactions(this.transactions)
     }
 }
