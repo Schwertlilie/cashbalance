@@ -232,8 +232,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         } else {
             this.appendTransaction(transaction)
         }
-        
-        // Save transactions
+
         let isSaved = await storeTransactions(this.transactions, this.md5)
         this.saveButton.htmlElement.disabled = false
         if (isSaved) {
@@ -250,31 +249,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         } else {
             costCenter = STRINGS.EDIT_LIST_COST_CENTER[this.costCenterRadioButtonGroup.value()]
         }
-
         
-        if (!this.draftCheckbox.value()){
-            if (this.dateInput.value() == "") {
-                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "date.")
-                return null
-            }
-            if (this.categoryInput.value() == "") {
-                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "category.")
-                return null
-            }
-            if (this.shopInput.value() == "") {
-                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "shop.")
-                return null
-            }
-            if (this.amountInput.value() == "") {
-                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "amount.")
-                return null
-            }
-            if (costCenter == "") {
-                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "cost center.")
-                return null
-            }
+        if (this.checkInputs(costCenter) == false) {
+            return null
         }
-
+        
         transaction.date = this.dateInput.value()
         transaction.category = this.categoryInput.value()
         transaction.shop = this.shopInput.value()
@@ -285,9 +264,36 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         transaction.costCenter = costCenter
         transaction.note = this.noteInput.value()
         transaction.uuid = this.uuid
-
+        
         return transaction
     }
+    
+    private checkInputs(costCenter: string): boolean {
+        if (!this.draftCheckbox.value()){
+            if (this.dateInput.value() == "") {
+                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "date.")
+                return false
+            }
+            if (this.categoryInput.value() == "") {
+                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "category.")
+                return false
+            }
+            if (this.shopInput.value() == "") {
+                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "shop.")
+                return false
+            }
+            if (this.amountInput.value() == "") {
+                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "amount.")
+                return false
+            }
+            if (costCenter == "") {
+                alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "cost center.")
+                return false
+            }
+        }
+        return true
+    }
+
     private appendTransaction(transaction: Transaction) {
         let index = getTransactionListIndex(this.transactions, this.uuid)
         if (index != -1) {

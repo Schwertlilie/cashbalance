@@ -120,9 +120,10 @@ export interface TransactionsWithMd5 {
 
 export function getTransactionListIndex(transactions: Transaction[], uuid: string): number {
     /**
-     * Returns the index of the transaction with specified uuid, or -1 if it is not present.
+     * Gets the index of the transaction with specified uuid, or -1 if it is not present.
      * @param transactions The list of transactions.
      * @param uuid The uuid to locate in the transactions list.
+     * @returns The index, or -1 if not present.
      */
 
     if (uuid == "") {
@@ -139,6 +140,8 @@ export function getTransactionListIndex(transactions: Transaction[], uuid: strin
 export function sortTransactions(transactions: Transaction[]): Transaction[] {
     /**
      * Sorts transactions by descending date. Puts drafts always at top.
+     * @param transactions The list of transactions to sort.
+     * @returns The sorted list.
      */
     transactions = transactions.sort((x, y) => y.date.localeCompare(x.date))
     transactions = transactions.sort((x, y) => Number(y.isDraft) - Number(x.isDraft))
