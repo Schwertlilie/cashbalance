@@ -8,6 +8,8 @@ import { Transaction, loadTransactions } from '../data/transaction';
 import { STRINGS } from '../language/default';
 import { formatDateAsGermanString } from '../webui/utils/humanFriendlyDates';
 
+let lastClickedTransactionUuid = ""
+
 export class TransactionList extends Module<HTMLDivElement> {
     private transactions: Transaction[] = []
     private transactionsContainer: Module<HTMLDivElement>
@@ -66,6 +68,9 @@ export class TransactionList extends Module<HTMLDivElement> {
                 this.transactions[i].costCenter,
                 this.transactions[i].uuid
             )
+            if (this.transactions[i].uuid == lastClickedTransactionUuid) {
+                transactionListEntry.highlightEntry()
+            }
             this.transactionsContainer.add(transactionListEntry)
         }
     }
@@ -150,7 +155,12 @@ class TransactionListEntry extends Module<HTMLLinkElement> {
 
     }
 
+    public highlightEntry() {
+        this.setClass("transactionEntry-highlight")
+    }
+
     public onClick() {
+        lastClickedTransactionUuid = this.uuid
         PageManager.open("edit", {uuid: this.uuid})
     }
 }

@@ -5,6 +5,10 @@
     border-bottom: 0.1em solid var(--color-base-c);
 }
 
+.transactionEntry-highlight {
+    background-color: var(--color-good-selected);
+}
+
 .transactionsTitleBar {
     display: flex;
     align-items: center;
