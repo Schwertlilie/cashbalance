@@ -244,6 +244,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             this.costCenterOtherInput.value(transaction.costCenter)
             
         } else {
+            this.costCenterOtherInput.value("")
             this.costCenterOtherInput.hide()
             this.costCenterRadioButtonGroup.value(costCenterIndex)
         }
