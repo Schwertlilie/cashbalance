@@ -29,6 +29,8 @@
 }
 
 .backButton {
+    background-color: var(--color-brand);
+    fill: var(--color-brand-c);
     display: flex;
     align-items: center;
     justify-content: center;
