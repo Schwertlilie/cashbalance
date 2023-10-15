@@ -36,20 +36,22 @@ export class TransactionList extends Module<HTMLDivElement> {
         }
         this.transactions = loadReturn.transactions
 
-        let validTransactions = this.transactions.filter((x) => !x.isDraft)
-        let dates = validTransactions.map((x: Transaction) => new Date(x.date))
-        let startDate = dates.reduce((x, y) => x<y?x:y)
-        let startDateString = formatDateAsGermanString(startDate)
+        if (this.transactions.length > 1) {
+            let validTransactions = this.transactions.filter((x) => !x.isDraft)
+            let dates = validTransactions.map((x: Transaction) => new Date(x.date))
+            let startDate = dates.reduce((x, y) => x<y?x:y)
+            let startDateString = formatDateAsGermanString(startDate)
 
-        let endDate = dates.reduce((x, y) => x>y?x:y)
-        let endDateString = formatDateAsGermanString(endDate)
-
-        let summary = STRINGS.TRANSACTION_LIST_SUMMARY
-        summary = summary.replace("{count}", this.transactions.length.toString())
-        summary = summary.replace("{startDate}", startDateString)
-        summary = summary.replace("{endDate}", endDateString)
-        let transactionSummary = new Module<HTMLDivElement>("div", summary, "transactionSummary")
-        this.transactionsContainer.add(transactionSummary)
+            let endDate = dates.reduce((x, y) => x>y?x:y)
+            let endDateString = formatDateAsGermanString(endDate)
+            
+            let summary = STRINGS.TRANSACTION_LIST_SUMMARY
+            summary = summary.replace("{count}", this.transactions.length.toString())
+            summary = summary.replace("{startDate}", startDateString)
+            summary = summary.replace("{endDate}", endDateString)
+            let transactionSummary = new Module<HTMLDivElement>("div", summary, "transactionSummary")
+            this.transactionsContainer.add(transactionSummary)
+        }
 
         for (let i = 0; i < this.transactions.length; i++) {
             let transactionListEntry = new TransactionListEntry(
