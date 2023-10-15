@@ -46,6 +46,7 @@ export class English {
     public static EDIT_RADIO_OUT = "Out"
     public static EDIT_CHECKBOX_CASH = "Cash"
     public static EDIT_CHECKBOX_TAX = "Tax"
+    public static EDIT_CHECKBOX_FIX = "Fix"
     public static EDIT_CHECKBOX_DRAFT = "Draft"
     public static EDIT_BUTTON_SAVE = "Save"
     public static EDIT_PLACEHOLDER_DATE = "2023-09-01"

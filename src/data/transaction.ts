@@ -1,7 +1,7 @@
 import { STRINGS } from "../language/default"
 import { WebFS } from "../webfs/client/webfs"
 
-let HEADER = "Date;Category;Shop;Amount/€;isCash;isTax;isDraft;Cost center;Note;uuid"
+let HEADER = "Date;Category;Shop;Amount/€;isCash;isTax;isFix;isDraft;Cost center;Note;uuid"
 let FILEPATH = "cashbalance.csv"
 
 export class Transaction {
@@ -12,6 +12,7 @@ export class Transaction {
         public amount: number = 0,
         public isCash: boolean = false,
         public isTax: boolean = false,
+        public isFix: boolean = false,
         public isDraft: boolean = false,
         public costCenter: string = "",
         public note: string = "",
@@ -30,6 +31,7 @@ export async function storeTransactions(transactions: Transaction[], md5: string
             (transactions[i].amount).toFixed(2).replace(".", ","),
             transactions[i].isCash?"1":"0",
             transactions[i].isTax?"1":"0",
+            transactions[i].isFix?"1":"0",
             transactions[i].isDraft?"1":"0",
             transactions[i].costCenter,
             transactions[i].note,
@@ -96,9 +98,10 @@ export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
             csvTokens[4]=="1"?true:false,
             csvTokens[5]=="1"?true:false,
             csvTokens[6]=="1"?true:false,
-            csvTokens[7],
+            csvTokens[7]=="1"?true:false,
             csvTokens[8],
             csvTokens[9],
+            csvTokens[10],
         )
         transactions.push(transaction)
     }

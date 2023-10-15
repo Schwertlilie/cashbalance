@@ -1,5 +1,5 @@
 import { Transaction, getTransactionListIndex, loadTransactions, sortTransactions, storeTransactions } from '../data/transaction';
-import { iconCash, iconTax } from '../icons';
+import { iconCash, iconRepeat, iconTax } from '../icons';
 import { STRINGS } from '../language/default';
 import { makeid } from '../utils/makeid';
 import { WebFS } from '../webfs/client/webfs';
@@ -20,6 +20,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     private amountInput: FormInput
     private cashCheckbox: FormCheckbox
     private taxCheckbox: FormCheckbox
+    private fixCheckbox: FormCheckbox
     private draftCheckbox: FormCheckbox
     private costCenterRadioButtonGroup: FormRadioButtonGroup
     private costCenterOtherInput: FormInput
@@ -120,10 +121,12 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         let tagDiv = new Module<HTMLDivElement>("div", "", "editTag")
         this.cashCheckbox = new FormCheckbox("checkboxCash", iconCash + " " + STRINGS.EDIT_CHECKBOX_CASH, "editIcon", false)
         this.taxCheckbox = new FormCheckbox("checkboxTax", iconTax + " " + STRINGS.EDIT_CHECKBOX_TAX, "editIcon", false)
+        this.fixCheckbox = new FormCheckbox("checkboxFix", iconRepeat + " " + STRINGS.EDIT_CHECKBOX_FIX, "editIcon", false)
         this.draftCheckbox = new FormCheckbox("checkboxDraft", STRINGS.EDIT_CHECKBOX_DRAFT, "", false)
         editContent.add(tagDiv)
         tagDiv.add(this.cashCheckbox)
         tagDiv.add(this.taxCheckbox)
+        tagDiv.add(this.fixCheckbox)
         tagDiv.add(this.draftCheckbox)
         
         // Receipt
@@ -233,6 +236,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         this.amountInput.onChange(this.amountInput.value())
         this.cashCheckbox.value(transaction.isCash)
         this.taxCheckbox.value(transaction.isTax)
+        this.fixCheckbox.value(transaction.isFix)
         this.draftCheckbox.value(transaction.isDraft)
         let costCenterIndex = STRINGS.EDIT_LIST_COST_CENTER.indexOf(transaction.costCenter)
         if (transaction.costCenter == "") {
@@ -294,6 +298,7 @@ export class TransactionEdit extends Module<HTMLDivElement> {
         transaction.amount = Number(this.amountInput.value())
         transaction.isCash = this.cashCheckbox.value()?true:false
         transaction.isTax = this.taxCheckbox.value()?true:false
+        transaction.isFix = this.fixCheckbox.value()?true:false
         transaction.isDraft = this.draftCheckbox.value()?true:false
         transaction.costCenter = costCenter
         transaction.note = this.noteInput.value()

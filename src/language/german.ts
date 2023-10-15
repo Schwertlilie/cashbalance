@@ -21,6 +21,7 @@ export class German extends English {
     public static EDIT_RADIO_OUT = "Aus"
     public static EDIT_CHECKBOX_CASH = "Bar"
     public static EDIT_CHECKBOX_TAX = "Steuerrelevant"
+    public static EDIT_CHECKBOX_FIX = "Fix"
     public static EDIT_CHECKBOX_DRAFT = "Entwurf"
     public static EDIT_BUTTON_SAVE = "Speichern"
     public static EDIT_PLACEHOLDER_CATEGORY = "Lebensmittel & Haushalt"

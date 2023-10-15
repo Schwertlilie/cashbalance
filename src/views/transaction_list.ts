@@ -1,6 +1,6 @@
 import './transaction_list.css'
 import { KWARGS, Module } from "../webui/module";
-import { iconCash, iconTax } from '../icons';
+import { iconCash, iconRepeat, iconTax } from '../icons';
 import { Button } from '../webui/form';
 import { PageManager } from '../webui/pagemanager';
 import { WebFS } from '../webfs/client/webfs';
@@ -60,6 +60,7 @@ export class TransactionList extends Module<HTMLDivElement> {
                 this.transactions[i].amount,
                 this.transactions[i].isCash,
                 this.transactions[i].isTax,
+                this.transactions[i].isFix,
                 this.transactions[i].isDraft,
                 this.transactions[i].date,
                 this.transactions[i].costCenter,
@@ -72,7 +73,7 @@ export class TransactionList extends Module<HTMLDivElement> {
 
 class TransactionListEntry extends Module<HTMLLinkElement> {
     private uuid: string = ""
-    public constructor(shop: string, category:string, amount: number, isCash: boolean, isTax: boolean, isDraft: boolean, date: string, costCenter: string, uuid: string) {
+    public constructor(shop: string, category:string, amount: number, isCash: boolean, isTax: boolean, isFix: boolean, isDraft: boolean, date: string, costCenter: string, uuid: string) {
         super("div", "", "transactionEntry")
         this.uuid = uuid
 
@@ -119,6 +120,14 @@ class TransactionListEntry extends Module<HTMLLinkElement> {
             taxIcon.setClass("transactionIconActive")
         }
         firstRow.add(taxIcon)
+
+        let fixIcon = new Module<HTMLDivElement>("div", iconRepeat, "transactionIcon")
+        if (isDraft) {
+            fixIcon.setClass("transactionDraft")
+        } else if (isFix) {
+            fixIcon.setClass("transactionIconActive")
+        }
+        firstRow.add(fixIcon)
 
         let categoryDiv = new Module<HTMLDivElement>("div", category)
         if (isDraft) {
