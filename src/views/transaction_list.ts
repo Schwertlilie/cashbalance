@@ -27,8 +27,9 @@ export class TransactionList extends Module<HTMLDivElement> {
     }
 
     public async update(_kwargs: KWARGS, _changedPage: boolean) {
-        if (WebFS.instance == null) {
+        if (WebFS.connections.size < 1) {
             PageManager.open("login", {})
+            return null
         }
         this.transactionsContainer.htmlElement.innerHTML = ""
         this.transactions = []

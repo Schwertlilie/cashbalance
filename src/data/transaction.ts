@@ -39,11 +39,13 @@ export async function storeTransactions(transactions: Transaction[], md5: string
         ].join(";")
         csvFileContent = csvFileContent + csvTransaction + "\n"
     }
-    if (WebFS.instance == null) {
+    let instance = WebFS.connections.values().next().value
+
+    if (instance == null) {
         alert(STRINGS.ERROR_INVALID_SESSION)
         return false
     } else {
-        let isSaved = await WebFS.instance!.putTxt(FILEPATH, csvFileContent, md5)
+        let isSaved = await instance!.putTxt(FILEPATH, csvFileContent, md5)
         if (!isSaved) {
             alert(STRINGS.ERROR_SAVE_FILE)
             return false
@@ -55,26 +57,28 @@ export async function storeTransactions(transactions: Transaction[], md5: string
 export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
     let transactions: Transaction[] = []
     let md5: string = ""
-    if (WebFS.instance == null) {
+    if (WebFS.connections.size < 1) {
         alert(STRINGS.ERROR_INVALID_SESSION)
         return null
     }
 
-    let fileTree = await WebFS.instance.list(".")
+    let instance = WebFS.connections.values().next().value
+
+    let fileTree = await instance.list(".")
     if (fileTree == null) {
         alert(STRINGS.ERROR_READ_FILE)
         return null
     }
     if (fileTree[FILEPATH]) {
     } else {
-        let isPut = await WebFS.instance.putTxt(FILEPATH, HEADER + "\n", "")
+        let isPut = await instance.putTxt(FILEPATH, HEADER + "\n", "")
         if (!isPut) {
             alert(STRINGS.ERROR_CREATE_FILE)
             return null
         }
     }
 
-    let csvFileContent = await WebFS.instance.readTxt(FILEPATH)
+    let csvFileContent = await instance.readTxt(FILEPATH)
     if (csvFileContent == null) {
         alert(STRINGS.ERROR_READ_FILE)
         return null      
@@ -105,7 +109,7 @@ export async function loadTransactions(): Promise<TransactionsWithMd5 | null> {
         )
         transactions.push(transaction)
     }
-    let newMd5 = await WebFS.instance.md5(FILEPATH)
+    let newMd5 = await instance.md5(FILEPATH)
     if (newMd5 == null) {
         alert(STRINGS.ERROR_READ_MD5)
         return null

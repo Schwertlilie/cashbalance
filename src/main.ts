@@ -2,15 +2,16 @@ import './webui/colors.css'
 import './main.css'
 import { PageManager } from './webui/pagemanager'
 import { STRINGS, setupLanguage } from './language/default'
-import { Login, tryReconnectToLastSession } from './views/login'
+import { Login, reconnectToLastSession, setPrefix } from './webfs/client/login/login'
 
 import { TransactionList } from './views/transaction_list'
 import { TransactionEdit } from './views/edit'
 
 async function main() {
+  setPrefix("cb")
   setupLanguage()
   document.getElementsByTagName("title")[0].innerHTML = STRINGS.APPNAME
-  await tryReconnectToLastSession()
+  reconnectToLastSession()
   new PageManager(
     "transactionList",
     {

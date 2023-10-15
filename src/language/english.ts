@@ -29,8 +29,12 @@ export class English {
     public static LOGIN_API_ENDPOINT_LABEL = "API Endpoint URL"
     public static LOGIN_API_TOKEN_LABEL = "API Token"
     public static LOGIN_SUBMIT = "Add Connection"
+    public static LOGIN_ALL_CONNECTIONS = "All"
     public static LOGIN_ERROR_MISSING_INPUTS = "You must provide all fields (session name, api endpoint and api token)."
     public static LOGIN_ERROR_LOGIN_FAILED = "The provided login information is wrong. Is the URL and API token correct?"
+    public static LOGIN_OFFLINE_MODAL_QUESTION = "Cannot connect to server. Do you want to continue in offline mode? Offline mode provides read-only view of transaction list."
+    public static LOGIN_OFFLINE_MODAL_CONFIRM = "Continue offline"
+    public static LOGIN_OFFLINE_MODAL_CANCEL = "Return to login"
 
     public static TRANSACTION_LIST_SUMMARY = "{count} transactions, {startDate} - {endDate}"
     

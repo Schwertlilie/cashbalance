@@ -186,8 +186,9 @@ export class TransactionEdit extends Module<HTMLDivElement> {
     }
 
     public async update(kwargs: KWARGS, _changedPage: boolean) {
-        if (WebFS.instance == null) {
+        if (WebFS.connections.size < 1) {
             PageManager.open("login", {})
+            return null
         }
         let loadReturn = await loadTransactions()
         if (loadReturn == null) {
