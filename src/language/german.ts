@@ -34,6 +34,7 @@ export class German extends English {
         "Andere"
     ]
     public static EDIT_LIST_CATEGORY = [
+        "Sonstige Einnahmen",
         "Lebensmittel & Haushalt",
         "Kleidung",
         "Hausrat",
