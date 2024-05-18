@@ -313,7 +313,17 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             if (this.dateInput.value() == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "date.")
                 return false
-            }
+            } else {
+                // Entries can be added for last month until 15th of current month (export on 16th):
+                // date.month >= (now - 15d).month
+                let date_read: Date = new Date(this.dateInput.value())
+                let date_now: Date = new Date()
+                let date_delta = new Date(date_now.getTime() - 15*24*60*60*1000)  // now - 15 days
+                if (date_read.getMonth() < date_delta.getMonth()) {
+                    alert(STRINGS.ERROR_DATE_TOO_OLD)
+                    return false
+                }
+            } 
             if (category == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "category.")
                 return false

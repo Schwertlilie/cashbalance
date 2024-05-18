@@ -12,6 +12,7 @@ export class English {
     public static ERROR_CREATE_FILE = "Cannot create file. Probably due to weak internet connection or lack of permissions."
     public static ERROR_UNKNOWN_DATASTRUCTURE = "Cannot parse csv due to unknown header."
     public static ERROR_EDIT_EMPTY_INPUT = "Cannot save transaction due to empty input "
+    public static ERROR_DATE_TOO_OLD = "Date is too far in the past. Data has already been exported for this month."
 
     public static TIME_LOCALE = "en"
     public static TIME_YESTERDAY = "yesterday"
