@@ -55,6 +55,3 @@ git commit -m "Build gh-pages."
 git push
 git subtree push --prefix dist origin gh-pages
 ```
-
-## TODO
-- [ ] Ask user if entry with category="Geschenk" and amount>0 is intended or category="Sonstige Einnahmen" applies

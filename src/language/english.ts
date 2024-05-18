@@ -13,6 +13,7 @@ export class English {
     public static ERROR_UNKNOWN_DATASTRUCTURE = "Cannot parse csv due to unknown header."
     public static ERROR_EDIT_EMPTY_INPUT = "Cannot save transaction due to empty input "
     public static ERROR_DATE_TOO_OLD = "Date is too far in the past. Data has already been exported for this month."
+    public static WARNING_CATEGORY_GIFT = "Category = \"Geschenke\" and Amount > 0: is this intended or did you mean Category = \"Sonstige Einnahmen\"? After confirmation of this alert, you might have to reopen the entry to change it."
 
     public static TIME_LOCALE = "en"
     public static TIME_YESTERDAY = "yesterday"

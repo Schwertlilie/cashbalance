@@ -327,6 +327,11 @@ export class TransactionEdit extends Module<HTMLDivElement> {
             if (category == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "category.")
                 return false
+            } else if (category == "Geschenke") {
+                let amount = Number(this.amountInput.value())
+                if (amount > 0) {
+                    alert(STRINGS.WARNING_CATEGORY_GIFT)
+                }
             }
             if (this.shopInput.value() == "") {
                 alert(STRINGS.ERROR_EDIT_EMPTY_INPUT + "shop.")
